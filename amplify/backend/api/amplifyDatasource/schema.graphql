@@ -1,0 +1,38 @@
+type User @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  Name: String!
+  email: AWSEmail
+  image: AWSURL
+  exterLink: AWSURL
+  userLevel: Int
+  isActive: Boolean
+}
+
+type VideoObject @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  caption: String!
+  videoFrameSize: String
+  associatedArticle: String
+  embedUl: String
+  accessAPI: String
+  archivedAt: String
+  author: String
+  dateCreated: AWSTimestamp
+  exampleCapture: AWSURL
+  video: String
+}
+
+type Post @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  title: String!
+  comments: [Comment] @hasMany(indexName: "byPost", fields: ["id"])
+  content: String
+  dateCreated: AWSTimestamp
+  author: String
+}
+
+type Comment @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  postID: ID! @index(name: "byPost")
+  content: String!
+}
